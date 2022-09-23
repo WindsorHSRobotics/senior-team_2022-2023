@@ -31,7 +31,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -44,7 +43,10 @@ import com.qualcomm.robotcore.util.Range;
  * rather than accessing the internal hardware directly. This is why the objects are declared "private".
  */
 
-public class RobotHardware {
+public class OurRobotHardware {
+
+    // Controls whether or not the robot will move in "slow mode."
+    public boolean slowMode = false;
 
     /* Declare OpMode members. */
     private LinearOpMode myOpMode = null;   // gain access to methods in the calling OpMode.
@@ -52,18 +54,18 @@ public class RobotHardware {
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
     private DcMotor leftDrive   = null;
     private DcMotor rightDrive  = null;
-    private DcMotor armMotor = null;
-    private Servo   leftHand = null;
-    private Servo   rightHand = null;
+    //private DcMotor armMotor = null;
+    //private Servo   leftHand = null;
+    //private Servo   rightHand = null;
 
     // Define Drive constants.  Make them public so they CAN be used by the calling OpMode
-    public static final double MID_SERVO       =  0.5 ;
-    public static final double HAND_SPEED      =  0.02 ;  // sets rate to move servo
-    public static final double ARM_UP_POWER    =  0.45 ;
-    public static final double ARM_DOWN_POWER  = -0.45 ;
+    //public static final double MID_SERVO       =  0.5 ;
+    //public static final double HAND_SPEED      =  0.02 ;  // sets rate to move servo
+    //public static final double ARM_UP_POWER    =  0.45 ;
+    //public static final double ARM_DOWN_POWER  = -0.45 ;
 
     // Define a constructor that allows the OpMode to pass a reference to itself.
-    public RobotHardware(LinearOpMode opmode) {
+    public OurRobotHardware(LinearOpMode opmode) {
         myOpMode = opmode;
     }
 
@@ -77,7 +79,7 @@ public class RobotHardware {
         // Define and Initialize Motors (note: need to use reference to actual OpMode).
         leftDrive  = myOpMode.hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = myOpMode.hardwareMap.get(DcMotor.class, "right_drive");
-        armMotor   = myOpMode.hardwareMap.get(DcMotor.class, "arm");
+        //armMotor   = myOpMode.hardwareMap.get(DcMotor.class, "arm");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -90,10 +92,10 @@ public class RobotHardware {
         // rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Define and initialize ALL installed servos.
-        leftHand = myOpMode.hardwareMap.get(Servo.class, "left_hand");
-        rightHand = myOpMode.hardwareMap.get(Servo.class, "right_hand");
-        leftHand.setPosition(MID_SERVO);
-        rightHand.setPosition(MID_SERVO);
+        //leftHand = myOpMode.hardwareMap.get(Servo.class, "left_hand");
+        //rightHand = myOpMode.hardwareMap.get(Servo.class, "right_hand");
+        //leftHand.setPosition(MID_SERVO);
+        //rightHand.setPosition(MID_SERVO);
 
         myOpMode.telemetry.addData(">", "Hardware Initialized");
         myOpMode.telemetry.update();
@@ -119,9 +121,6 @@ public class RobotHardware {
             left /= max;
             right /= max;
         }
-
-        // Use existing function to drive both wheels.
-        setDrivePower(left, right);
     }
 
     /**
@@ -132,8 +131,20 @@ public class RobotHardware {
      */
     public void setDrivePower(double leftWheel, double rightWheel) {
         // Output the values to the motor drives.
-        leftDrive.setPower(leftWheel);
-        rightDrive.setPower(rightWheel);
+        if (slowMode == false) {
+            leftDrive.setPower(leftWheel);
+            rightDrive.setPower(rightWheel);
+
+        }
+        else if (slowMode == true) {
+            // Same as above, but halve them.
+            leftDrive.setPower(leftWheel / 2);
+            rightDrive.setPower(rightWheel / 2);
+
+        }
+
+
+
     }
 
     /**
@@ -141,9 +152,9 @@ public class RobotHardware {
      *
      * @param power driving power (-1.0 to 1.0)
      */
-    public void setArmPower(double power) {
-        armMotor.setPower(power);
-    }
+    //public void setArmPower(double power) {
+        //armMotor.setPower(power);
+    //}
 
     /**
      * Send the two hand-servos to opposing (mirrored) positions, based on the passed offset.
@@ -152,7 +163,7 @@ public class RobotHardware {
      */
     public void setHandPositions(double offset) {
         offset = Range.clip(offset, -0.5, 0.5);
-        leftHand.setPosition(MID_SERVO + offset);
-        rightHand.setPosition(MID_SERVO - offset);
+        //leftHand.setPosition(MID_SERVO + offset);
+        //rightHand.setPosition(MID_SERVO - offset);
     }
 }

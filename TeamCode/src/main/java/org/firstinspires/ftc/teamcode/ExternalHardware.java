@@ -48,17 +48,18 @@ public class ExternalHardware extends LinearOpMode {
 
     // Create a RobotHardware object to be used to access robot hardware.
     // Prefix any hardware functions with "robot." to access this class.
-    RobotHardware robot       = new RobotHardware(this);
+    OurRobotHardware robot       = new OurRobotHardware(this);
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         double drive        = 0;
         double turn         = 0;
-        double arm          = 0;
-        double handOffset   = 0;
+        //double arm          = 0;
+        //double handOffset   = 0;
 
         // initialize all the hardware, using the hardware class.
         robot.init();
+
 
         // Send telemetry message to signify robot waiting;
         // Wait for the game to start (driver presses PLAY)
@@ -66,6 +67,8 @@ public class ExternalHardware extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+
+
 
             // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
@@ -76,29 +79,47 @@ public class ExternalHardware extends LinearOpMode {
             // Combine drive and turn for blended motion. Use RobotHardware class
             robot.driveRobot(drive, turn);
 
+            // Control "slow mode" settings with the gamepad.
+            if (gamepad1.a) {
+                if (robot.slowMode == false) {
+                    robot.slowMode = true;
+                }
+                else {
+                    robot.slowMode = false;
+                }
+            }
+
+
+
+
+
+            // 9/20/22: I'm commenting out all the servo arm code because the robot is basically
+            // just the drive train right now. I'm probably just going to write my own claw code
+            // when it comes down to it anyways. -David
+
             // Use gamepad left & right Bumpers to open and close the claw
             // Use the SERVO constants defined in RobotHardware class.
             // Each time around the loop, the servos will move by a small amount.
             // Limit the total offset to half of the full travel range
-            if (gamepad1.right_bumper)
-                handOffset += robot.HAND_SPEED;
-            else if (gamepad1.left_bumper)
-                handOffset -= robot.HAND_SPEED;
-            handOffset = Range.clip(handOffset, -0.5, 0.5);
+            //if (gamepad1.right_bumper)
+                //handOffset += robot.HAND_SPEED;
+            //else if (gamepad1.left_bumper)
+                //handOffset -= robot.HAND_SPEED;
+            //handOffset = Range.clip(handOffset, -0.5, 0.5);
 
             // Move both servos to new position.  Use RobotHardware class
-            robot.setHandPositions(handOffset);
+            //robot.setHandPositions(handOffset);
 
             // Use gamepad buttons to move arm up (Y) and down (A)
             // Use the MOTOR constants defined in RobotHardware class.
-            if (gamepad1.y)
-                arm = robot.ARM_UP_POWER;
-            else if (gamepad1.a)
-                arm = robot.ARM_DOWN_POWER;
-            else
-                arm = 0;
+            //if (gamepad1.y)
+                //arm = robot.ARM_UP_POWER;
+            //else if (gamepad1.a)
+                //arm = robot.ARM_DOWN_POWER;
+            //else
+                //arm = 0;
 
-            robot.setArmPower(arm);
+            //robot.setArmPower(arm);
 
             // Send telemetry messages to explain controls and show robot status
             telemetry.addData("Drive", "Left Stick");
@@ -109,8 +130,8 @@ public class ExternalHardware extends LinearOpMode {
 
             telemetry.addData("Drive Power", "%.2f", drive);
             telemetry.addData("Turn Power",  "%.2f", turn);
-            telemetry.addData("Arm Power",  "%.2f", arm);
-            telemetry.addData("Hand Position",  "Offset = %.2f", handOffset);
+            //telemetry.addData("Arm Power",  "%.2f", arm);
+            //telemetry.addData("Hand Position",  "Offset = %.2f", handOffset);
             telemetry.update();
 
             // Pace this loop so hands move at a reasonable speed.
