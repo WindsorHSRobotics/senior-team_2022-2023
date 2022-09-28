@@ -130,18 +130,22 @@ public class OurRobotHardware {
      * @param rightWheel    Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
      */
     public void setDrivePower(double leftWheel, double rightWheel) {
+
+        leftDrive.setPower(leftWheel);
+        rightDrive.setPower(rightWheel);
+
         // Output the values to the motor drives.
-        if (slowMode == false) {
-            leftDrive.setPower(leftWheel);
-            rightDrive.setPower(rightWheel);
+        //if (slowMode == false) {
+            //leftDrive.setPower(leftWheel);
+            //rightDrive.setPower(rightWheel);
 
-        }
-        else if (slowMode == true) {
+        //}
+        //else if (slowMode == true) {
             // Same as above, but halve them.
-            leftDrive.setPower(leftWheel / 2);
-            rightDrive.setPower(rightWheel / 2);
+            //leftDrive.setPower(leftWheel / 2);
+            //rightDrive.setPower(rightWheel / 2);
 
-        }
+        //}
 
 
 

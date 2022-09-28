@@ -77,7 +77,9 @@ public class ExternalHardware extends LinearOpMode {
             turn  =  gamepad1.right_stick_x;
 
             // Combine drive and turn for blended motion. Use RobotHardware class
+            robot.setDrivePower(5, 5);
             robot.driveRobot(drive, turn);
+
 
             // Control "slow mode" settings with the gamepad.
             if (gamepad1.a) {
