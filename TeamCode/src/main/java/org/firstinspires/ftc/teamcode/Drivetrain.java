@@ -33,7 +33,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * This file contains an example of a Linear "OpMode".
@@ -67,7 +69,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 //@Disabled
 public class Drivetrain extends LinearOpMode {
 
-    // Declare OpMode members for each of the 4 motors.
+    // Declare OpMode members for each of the motors.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftFrontDrive = null;
     private DcMotor leftBackDrive = null;
@@ -75,6 +77,12 @@ public class Drivetrain extends LinearOpMode {
     private DcMotor rightBackDrive = null;
     private DcMotor CollectionDrive= null;
     private DcMotor ArmDrive= null;
+    private Servo claw = null;
+
+    // claw constants and associated variables
+    public static final double MID_SERVO   =  0.5 ;
+    public static final double CLAW_SPEED  = 0.02 ;
+    double clawOffset = 0;
 
     @Override
     public void runOpMode() {
@@ -87,6 +95,7 @@ public class Drivetrain extends LinearOpMode {
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         CollectionDrive = hardwareMap.get(DcMotor.class, "Collection_drive");
         ArmDrive = hardwareMap.get(DcMotor.class, "Arm_drive");
+        claw = hardwareMap.get(Servo.class, "Claw");
 
 
 
@@ -107,8 +116,14 @@ public class Drivetrain extends LinearOpMode {
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         CollectionDrive.setDirection(DcMotor.Direction.FORWARD);
         ArmDrive.setDirection(DcMotor.Direction.FORWARD);
+        claw.setPosition(0.5);
 
-
+        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        CollectionDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //ArmDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER); // Arm doesn't use encoders, will break if you uncomment this
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -136,6 +151,7 @@ public class Drivetrain extends LinearOpMode {
             double rightBackPower  = axial + lateral - yaw;
             double CollectionPower = gamepad1.right_trigger - gamepad1.left_trigger;
 
+            // Arm control
             if(gamepad1.y){
                 ArmDrive.setPower(10);
             }else {
@@ -146,6 +162,17 @@ public class Drivetrain extends LinearOpMode {
             }else{
                 ArmDrive.setPower(0);
             }
+
+            // Claw control
+            if (gamepad1.b)
+                clawOffset += CLAW_SPEED;
+            else if (gamepad1.x)
+                clawOffset -= CLAW_SPEED;
+
+            // Servo position changes
+            clawOffset = Range.clip(clawOffset, -0.5, 0.5);
+            claw.setPosition(MID_SERVO + clawOffset);
+
 
 
             // Normalize the values so no wheel power exceeds 100%
