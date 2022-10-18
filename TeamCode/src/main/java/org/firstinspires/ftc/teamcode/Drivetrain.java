@@ -118,11 +118,12 @@ public class Drivetrain extends LinearOpMode {
         ArmDrive.setDirection(DcMotor.Direction.FORWARD);
         claw.setPosition(0.5);
 
-        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        CollectionDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        // DON'T ENABLE THESE!!! They WILL break the rest of the robot for whatever reason!!!
+        //leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //CollectionDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //ArmDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER); // Arm doesn't use encoders, will break if you uncomment this
 
 
