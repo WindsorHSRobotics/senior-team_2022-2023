@@ -76,7 +76,7 @@ public class Drivetrain extends LinearOpMode {
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
     private DcMotor CollectionDrive= null;
-    private DcMotor ArmDrive= null;
+    private DcMotor ArmDrive = null;
     private Servo claw = null;
 
     // claw constants and associated variables
@@ -139,7 +139,7 @@ public class Drivetrain extends LinearOpMode {
             double max;
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-            double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+            double axial   = gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  gamepad1.left_stick_x;
             double yaw     =  gamepad1.right_stick_x;
 
@@ -154,7 +154,7 @@ public class Drivetrain extends LinearOpMode {
 
             // Arm control
             if(gamepad1.y){
-                ArmDrive.setPower(10);
+                ArmDrive.setPower(1);
             }else {
                 ArmDrive.setPower(0);
             }
