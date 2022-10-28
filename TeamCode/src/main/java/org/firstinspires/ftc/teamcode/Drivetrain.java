@@ -75,7 +75,7 @@ public class Drivetrain extends LinearOpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
-    private DcMotor CollectionDrive= null;
+    //private DcMotor CollectionDrive= null;
     private DcMotor ArmDrive = null;
     private Servo claw = null;
 
@@ -93,7 +93,7 @@ public class Drivetrain extends LinearOpMode {
         leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        CollectionDrive = hardwareMap.get(DcMotor.class, "Collection_drive");
+        //CollectionDrive = hardwareMap.get(DcMotor.class, "Collection_drive");
         ArmDrive = hardwareMap.get(DcMotor.class, "Arm_drive");
         claw = hardwareMap.get(Servo.class, "Claw");
 
@@ -114,7 +114,7 @@ public class Drivetrain extends LinearOpMode {
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        CollectionDrive.setDirection(DcMotor.Direction.FORWARD);
+        //CollectionDrive.setDirection(DcMotor.Direction.FORWARD);
         ArmDrive.setDirection(DcMotor.Direction.FORWARD);
         claw.setPosition(0.5);
 
@@ -150,7 +150,7 @@ public class Drivetrain extends LinearOpMode {
             double rightFrontPower = axial - lateral - yaw;
             double leftBackPower   = axial - lateral + yaw;
             double rightBackPower  = axial + lateral - yaw;
-            double CollectionPower = gamepad1.right_trigger - gamepad1.left_trigger;
+            //double CollectionPower = gamepad1.right_trigger - gamepad1.left_trigger;
 
             // Arm control
             if(gamepad1.y){
@@ -211,7 +211,7 @@ public class Drivetrain extends LinearOpMode {
             rightFrontDrive.setPower(rightFrontPower);
             leftBackDrive.setPower(leftBackPower);
             rightBackDrive.setPower(rightBackPower);
-            CollectionDrive.setPower(CollectionPower);
+            //CollectionDrive.setPower(CollectionPower);
 
 
 

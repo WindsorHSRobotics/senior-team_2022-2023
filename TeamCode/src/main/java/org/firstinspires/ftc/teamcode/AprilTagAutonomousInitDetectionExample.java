@@ -228,9 +228,23 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode {
         /* Actually do something useful */
         if(tagOfInterest == null)
         {
-            allAtOnce(-1);
+            // Drive up to the highest pole
+            allAtOnce(-.87);
             sleep(1000);
-            allAtOnce(1);
+            allAtOnce(0);
+
+            // Turn around a bit
+            sleep(500);
+            leftFrontDrive.setPower(-.87);
+            leftBackDrive.setPower(-.87);
+            rightFrontDrive.setPower(.87);
+            rightBackDrive.setPower(.87);
+            sleep(1000);
+            allAtOnce(0);
+
+            // Push the arm up to the pole
+            ArmDrive.setPower(0.5);
+
         }
         else
         {
@@ -241,9 +255,12 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode {
             // e.g.
             if(tagOfInterest.id == 1) // Left
             {
-                allAtOnce(-.25);
+                // Drive forward
+                allAtOnce(1);
                 sleep(1000);
-                allAtOnce(.25);
+                // Turn left
+
+
 
             }
             else if(tagOfInterest.id == 2) // Middle
