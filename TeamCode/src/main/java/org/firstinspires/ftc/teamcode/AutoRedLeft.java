@@ -23,7 +23,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.apriltag.AprilTagDetection;
@@ -31,17 +33,10 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-
 import java.util.ArrayList;
 
-@Autonomous(name="Auto 1")
-public class AprilTagAutonomousInitDetectionExample extends LinearOpMode {
+@Autonomous(name="Auto Red: Left")
+public class AutoRedLeft extends LinearOpMode {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
@@ -52,7 +47,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
-    private DcMotor CollectionDrive= null;
+    //private DcMotor CollectionDrive= null;
     private DcMotor ArmDrive = null;
     private Servo claw = null;
 
@@ -98,7 +93,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode {
         leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        CollectionDrive = hardwareMap.get(DcMotor.class, "Collection_drive");
+        //CollectionDrive = hardwareMap.get(DcMotor.class, "Collection_drive");
         ArmDrive = hardwareMap.get(DcMotor.class, "Arm_drive");
         claw = hardwareMap.get(Servo.class, "Claw");
 
@@ -106,7 +101,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode {
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        CollectionDrive.setDirection(DcMotor.Direction.FORWARD);
+        //CollectionDrive.setDirection(DcMotor.Direction.FORWARD);
         ArmDrive.setDirection(DcMotor.Direction.FORWARD);
         claw.setPosition(0.5);
 
@@ -229,21 +224,24 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode {
         if(tagOfInterest == null)
         {
             // Drive up to the highest pole
-            allAtOnce(-.87);
-            sleep(1000);
+            claw.setPosition(0);
+            allAtOnce(-1);
+            sleep(1200);
             allAtOnce(0);
 
-            // Turn around a bit
+            // Turn a bit
             sleep(500);
-            leftFrontDrive.setPower(-.87);
-            leftBackDrive.setPower(-.87);
-            rightFrontDrive.setPower(.87);
-            rightBackDrive.setPower(.87);
-            sleep(1000);
+            leftFrontDrive.setPower(1);
+            leftBackDrive.setPower(1);
+            rightFrontDrive.setPower(-1);
+            rightBackDrive.setPower(-1);
+            sleep(270);
             allAtOnce(0);
 
             // Push the arm up to the pole
-            ArmDrive.setPower(0.5);
+            ArmDrive.setPower(-1);
+            sleep(4000);
+            ArmDrive.setPower(0);
 
         }
         else
