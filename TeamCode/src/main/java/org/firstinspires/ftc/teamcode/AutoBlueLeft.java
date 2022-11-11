@@ -35,8 +35,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name="Auto Red: Left")
-public class AutoRedLeft extends LinearOpMode {
+@Autonomous(name="Auto Blue: Left")
+public class AutoBlueLeft extends LinearOpMode {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
@@ -234,6 +234,57 @@ public class AutoRedLeft extends LinearOpMode {
             // e.g.
             if(tagOfInterest.id == 1) // Left
             {
+                // Drive up to the highest pole
+                claw.setPosition(0);
+                allAtOnce(-1);
+                sleep(930);
+                allAtOnce(0);
+
+                // Turn a bit
+                sleep(500);
+                leftFrontDrive.setPower(-1);
+                leftBackDrive.setPower(-1);
+                rightFrontDrive.setPower(1);
+                rightBackDrive.setPower(1);
+                sleep(60);
+                allAtOnce(0);
+
+                // Push the arm up to the pole
+                ArmDrive.setPower(-1);
+                sleep(4000);
+                ArmDrive.setPower(0);
+
+                // Open up and drop the cone then close
+                claw.setPosition(0.5);
+                sleep(50);
+                claw.setPosition(0);
+
+                // Turn back around and drive
+                sleep(500);
+                leftFrontDrive.setPower(1);
+                leftBackDrive.setPower(1);
+                rightFrontDrive.setPower(-1);
+                rightBackDrive.setPower(-1);
+                sleep(100);
+                allAtOnce(0);
+
+                allAtOnce(1);
+                sleep(400);
+                allAtOnce(0);
+
+                // Turn into the correct square (left)
+                sleep(500);
+                leftFrontDrive.setPower(1);
+                leftBackDrive.setPower(1);
+                rightFrontDrive.setPower(-1);
+                rightBackDrive.setPower(-1);
+                sleep(600);
+                allAtOnce(0);
+
+                // Now drive into it
+                allAtOnce(1);
+                sleep(400);
+                allAtOnce(0);
 
             }
             else if(tagOfInterest.id == 2) // Middle
@@ -246,11 +297,11 @@ public class AutoRedLeft extends LinearOpMode {
 
                 // Turn a bit
                 sleep(500);
-                leftFrontDrive.setPower(1);
-                leftBackDrive.setPower(1);
-                rightFrontDrive.setPower(-1);
-                rightBackDrive.setPower(-1);
-                sleep(40);
+                leftFrontDrive.setPower(-1);
+                leftBackDrive.setPower(-1);
+                rightFrontDrive.setPower(1);
+                rightBackDrive.setPower(1);
+                sleep(60);
                 allAtOnce(0);
 
                 // Push the arm up to the pole
@@ -265,10 +316,10 @@ public class AutoRedLeft extends LinearOpMode {
 
                 // Turn back around and drive to the middle
                 sleep(500);
-                leftFrontDrive.setPower(-1);
-                leftBackDrive.setPower(-1);
-                rightFrontDrive.setPower(1);
-                rightBackDrive.setPower(1);
+                leftFrontDrive.setPower(1);
+                leftBackDrive.setPower(1);
+                rightFrontDrive.setPower(-1);
+                rightBackDrive.setPower(-1);
                 sleep(100);
                 allAtOnce(0);
 
@@ -279,7 +330,57 @@ public class AutoRedLeft extends LinearOpMode {
             }
             else if(tagOfInterest.id == 3) // Right
             {
-                // do something else
+                // Drive up to the highest pole
+                claw.setPosition(0);
+                allAtOnce(-1);
+                sleep(930);
+                allAtOnce(0);
+
+                // Turn a bit
+                sleep(500);
+                leftFrontDrive.setPower(-1);
+                leftBackDrive.setPower(-1);
+                rightFrontDrive.setPower(1);
+                rightBackDrive.setPower(1);
+                sleep(60);
+                allAtOnce(0);
+
+                // Push the arm up to the pole
+                ArmDrive.setPower(-1);
+                sleep(4000);
+                ArmDrive.setPower(0);
+
+                // Open up and drop the cone then close
+                claw.setPosition(0.5);
+                sleep(50);
+                claw.setPosition(0);
+
+                // Turn back around and drive
+                sleep(500);
+                leftFrontDrive.setPower(1);
+                leftBackDrive.setPower(1);
+                rightFrontDrive.setPower(-1);
+                rightBackDrive.setPower(-1);
+                sleep(100);
+                allAtOnce(0);
+
+                allAtOnce(1);
+                sleep(400);
+                allAtOnce(0);
+
+                // Turn into the correct square (right)
+                sleep(500);
+                leftFrontDrive.setPower(-1);
+                leftBackDrive.setPower(-1);
+                rightFrontDrive.setPower(1);
+                rightBackDrive.setPower(1);
+                sleep(600);
+                allAtOnce(0);
+
+                // Now drive into it
+                allAtOnce(-1);
+                sleep(400);
+                allAtOnce(0);
             }
         }
 

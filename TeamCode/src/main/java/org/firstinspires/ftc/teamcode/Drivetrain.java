@@ -116,7 +116,7 @@ public class Drivetrain extends LinearOpMode {
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         //CollectionDrive.setDirection(DcMotor.Direction.FORWARD);
         ArmDrive.setDirection(DcMotor.Direction.FORWARD);
-        claw.setPosition(0.5);
+        claw.setPosition(0);
 
         // DON'T ENABLE THESE!!! They WILL break the rest of the robot for whatever reason!!!
         //leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -153,21 +153,21 @@ public class Drivetrain extends LinearOpMode {
             //double CollectionPower = gamepad1.right_trigger - gamepad1.left_trigger;
 
             // Arm control
-            if(gamepad1.y){
+            if(gamepad1.y || gamepad2.y){
                 ArmDrive.setPower(1);
             }else {
                 ArmDrive.setPower(0);
             }
-            if(gamepad1.a){
+            if(gamepad1.a || gamepad2.a){
                 ArmDrive.setPower(-1);
             }else{
                 ArmDrive.setPower(0);
             }
 
             // Claw control
-            if (gamepad1.b)
+            if (gamepad1.b || gamepad2.b)
                 clawOffset += CLAW_SPEED;
-            else if (gamepad1.x)
+            else if (gamepad1.x || gamepad2.x)
                 clawOffset -= CLAW_SPEED;
 
             // Servo position changes

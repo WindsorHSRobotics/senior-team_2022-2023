@@ -35,8 +35,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous(name="Auto Red: Left")
-public class AutoRedLeft extends LinearOpMode {
+@Autonomous(name="Auto Blue: Right")
+public class AutoBlueRight extends LinearOpMode {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
