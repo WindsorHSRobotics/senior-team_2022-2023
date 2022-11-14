@@ -75,8 +75,8 @@ public class Drivetrain extends LinearOpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
-    private DcMotor CollectionDrive= null;
-    private DcMotor ArmDrive= null;
+    //private DcMotor CollectionDrive= null;
+    private DcMotor ArmDrive = null;
     private Servo claw = null;
 
     // claw constants and associated variables
@@ -93,7 +93,7 @@ public class Drivetrain extends LinearOpMode {
         leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        CollectionDrive = hardwareMap.get(DcMotor.class, "Collection_drive");
+        //CollectionDrive = hardwareMap.get(DcMotor.class, "Collection_drive");
         ArmDrive = hardwareMap.get(DcMotor.class, "Arm_drive");
         claw = hardwareMap.get(Servo.class, "Claw");
 
@@ -114,15 +114,16 @@ public class Drivetrain extends LinearOpMode {
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        CollectionDrive.setDirection(DcMotor.Direction.FORWARD);
+        //CollectionDrive.setDirection(DcMotor.Direction.FORWARD);
         ArmDrive.setDirection(DcMotor.Direction.FORWARD);
-        claw.setPosition(0.5);
+        claw.setPosition(0);
 
-        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        CollectionDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        // DON'T ENABLE THESE!!! They WILL break the rest of the robot for whatever reason!!!
+        //leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //CollectionDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //ArmDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER); // Arm doesn't use encoders, will break if you uncomment this
 
 
@@ -138,7 +139,7 @@ public class Drivetrain extends LinearOpMode {
             double max;
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-            double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+            double axial   = gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  gamepad1.left_stick_x;
             double yaw     =  gamepad1.right_stick_x;
 
@@ -149,24 +150,24 @@ public class Drivetrain extends LinearOpMode {
             double rightFrontPower = axial - lateral - yaw;
             double leftBackPower   = axial - lateral + yaw;
             double rightBackPower  = axial + lateral - yaw;
-            double CollectionPower = gamepad1.right_trigger - gamepad1.left_trigger;
+            //double CollectionPower = gamepad1.right_trigger - gamepad1.left_trigger;
 
             // Arm control
-            if(gamepad1.y){
-                ArmDrive.setPower(10);
+            if(gamepad1.y || gamepad2.y){
+                ArmDrive.setPower(1);
             }else {
                 ArmDrive.setPower(0);
             }
-            if(gamepad1.a){
+            if(gamepad1.a || gamepad2.a){
                 ArmDrive.setPower(-1);
             }else{
                 ArmDrive.setPower(0);
             }
 
             // Claw control
-            if (gamepad1.b)
+            if (gamepad1.b || gamepad2.b)
                 clawOffset += CLAW_SPEED;
-            else if (gamepad1.x)
+            else if (gamepad1.x || gamepad2.x)
                 clawOffset -= CLAW_SPEED;
 
             // Servo position changes
@@ -210,7 +211,7 @@ public class Drivetrain extends LinearOpMode {
             rightFrontDrive.setPower(rightFrontPower);
             leftBackDrive.setPower(leftBackPower);
             rightBackDrive.setPower(rightBackPower);
-            CollectionDrive.setPower(CollectionPower);
+            //CollectionDrive.setPower(CollectionPower);
 
 
 
