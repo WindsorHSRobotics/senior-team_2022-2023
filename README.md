@@ -9,5 +9,5 @@ A big thank you also goes out to the following:
 * The amazing members of my team. Times have been tough thru the season, but I know that I always have strong, respectable, and sometimes humorous people I can rely upon. 
 
 The tool-using simians of Wrench Monkeys are:
-Kian, Chase, David, Abrar, Zale, Lincoln
+Kian, Chase, David, Abrar, Zale, Lincoln.
 
