@@ -77,7 +77,8 @@ public class Drivetrain extends LinearOpMode {
     private DcMotor rightBackDrive = null;
     //private DcMotor CollectionDrive= null;
     private DcMotor ArmDrive = null;
-    private Servo claw = null;
+    private Servo ratchetServo = null;
+    private DcMotor ratchetMotor = null;
 
     // claw constants and associated variables
     public static final double MID_SERVO   =  0.5 ;
@@ -95,7 +96,8 @@ public class Drivetrain extends LinearOpMode {
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         //CollectionDrive = hardwareMap.get(DcMotor.class, "Collection_drive");
         ArmDrive = hardwareMap.get(DcMotor.class, "Arm_drive");
-        claw = hardwareMap.get(Servo.class, "Claw");
+        ratchetMotor = hardwareMap.get(DcMotor.class, "ratchet_motor");
+        ratchetServo = hardwareMap.get(Servo.class, "ratchet_servo");
 
 
 
@@ -116,7 +118,7 @@ public class Drivetrain extends LinearOpMode {
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         //CollectionDrive.setDirection(DcMotor.Direction.FORWARD);
         ArmDrive.setDirection(DcMotor.Direction.FORWARD);
-        claw.setPosition(0);
+        ratchetServo.setPosition(0);
 
         // DON'T ENABLE THESE!!! They WILL break the rest of the robot for whatever reason!!!
         //leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -124,7 +126,7 @@ public class Drivetrain extends LinearOpMode {
         //rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //CollectionDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //ArmDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER); // Arm doesn't use encoders, will break if you uncomment this
+        //ArmDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -152,16 +154,32 @@ public class Drivetrain extends LinearOpMode {
             double rightBackPower  = axial + lateral - yaw;
             //double CollectionPower = gamepad1.right_trigger - gamepad1.left_trigger;
 
-            // Arm control
+            ///* Arm and ratchet motor control *///
+
+            // Go up but don't spin ratchet
             if(gamepad1.y || gamepad2.y){
-                ArmDrive.setPower(1);
+                ArmDrive.setPower(-1);
             }else {
                 ArmDrive.setPower(0);
             }
+
+            // Go down and spin ratchet clockwise
             if(gamepad1.a || gamepad2.a){
-                ArmDrive.setPower(-1);
+                ArmDrive.setPower(1);
+                ratchetMotor.setPower(1);
             }else{
                 ArmDrive.setPower(0);
+                ratchetMotor.setPower(0);
+            }
+
+            // Servo ratchet opens when button is pressed
+
+
+            // Spin ratchet clockwise manually ("A security thing" -Kian)
+            if (gamepad1.b || gamepad2.b) {
+                ratchetMotor.setPower(1);
+            } else {
+                ratchetMotor.setPower(0);
             }
 
             // Claw control
@@ -172,7 +190,7 @@ public class Drivetrain extends LinearOpMode {
 
             // Servo position changes
             clawOffset = Range.clip(clawOffset, -0.5, 0.5);
-            claw.setPosition(MID_SERVO + clawOffset);
+            //claw.setPosition(MID_SERVO + clawOffset);
 
 
 
