@@ -173,6 +173,14 @@ public class Drivetrain extends LinearOpMode {
             }
 
             // Servo ratchet opens when button is pressed
+            if (gamepad1.x || gamepad2.x) {
+                ratchetServo.setPosition(0.5);
+                sleep(100);
+                ratchetMotor.setPower(-1);
+            } else {
+                ratchetMotor.setPower(0);
+                ratchetServo.setPosition(0);
+            }
 
 
             // Spin ratchet clockwise manually ("A security thing" -Kian)
@@ -183,13 +191,13 @@ public class Drivetrain extends LinearOpMode {
             }
 
             // Claw control
-            if (gamepad1.b || gamepad2.b)
-                clawOffset += CLAW_SPEED;
-            else if (gamepad1.x || gamepad2.x)
-                clawOffset -= CLAW_SPEED;
+            //if (gamepad1.b || gamepad2.b)
+                //clawOffset += CLAW_SPEED;
+            //else if (gamepad1.x || gamepad2.x)
+                //clawOffset -= CLAW_SPEED;
 
             // Servo position changes
-            clawOffset = Range.clip(clawOffset, -0.5, 0.5);
+            //clawOffset = Range.clip(clawOffset, -0.5, 0.5);
             //claw.setPosition(MID_SERVO + clawOffset);
 
 
