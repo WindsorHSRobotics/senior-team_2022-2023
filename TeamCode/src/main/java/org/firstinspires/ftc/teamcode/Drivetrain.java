@@ -174,9 +174,10 @@ public class Drivetrain extends LinearOpMode {
 
             // Servo ratchet opens when button is pressed
             if (gamepad1.x || gamepad2.x) {
-                ratchetServo.setPosition(0.5);
+                ratchetServo.setPosition(0.2);
                 sleep(100);
-                ratchetMotor.setPower(-1);
+                ratchetMotor.setPower(0.8);
+                sleep(500);
             } else {
                 ratchetMotor.setPower(0);
                 ratchetServo.setPosition(0);
@@ -242,7 +243,7 @@ public class Drivetrain extends LinearOpMode {
 
 
             // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.addData("Real Actual Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
             telemetry.update();
