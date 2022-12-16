@@ -166,7 +166,8 @@ public class Drivetrain extends LinearOpMode {
             // Go down and spin ratchet clockwise
             if(gamepad1.a || gamepad2.a){
                 ArmDrive.setPower(1);
-                ratchetMotor.setPower(1);
+                ratchetMotor.setPower(-1);
+                sleep(500);
             }else{
                 ArmDrive.setPower(0);
                 ratchetMotor.setPower(0);
