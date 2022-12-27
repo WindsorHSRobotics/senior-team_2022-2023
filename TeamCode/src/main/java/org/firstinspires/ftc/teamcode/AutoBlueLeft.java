@@ -49,7 +49,8 @@ public class AutoBlueLeft extends LinearOpMode {
     private DcMotor rightBackDrive = null;
     //private DcMotor CollectionDrive= null;
     private DcMotor ArmDrive = null;
-    private Servo claw = null;
+    private Servo ratchetServo = null;
+    private DcMotor ratchetMotor = null;
 
     // claw constants and associated variables
     public static final double MID_SERVO   =  0.5 ;
@@ -95,7 +96,8 @@ public class AutoBlueLeft extends LinearOpMode {
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         //CollectionDrive = hardwareMap.get(DcMotor.class, "Collection_drive");
         ArmDrive = hardwareMap.get(DcMotor.class, "Arm_drive");
-        claw = hardwareMap.get(Servo.class, "Claw");
+        ratchetMotor = hardwareMap.get(DcMotor.class, "ratchet_motor");
+        ratchetServo = hardwareMap.get(Servo.class, "ratchet_servo");
 
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -103,7 +105,7 @@ public class AutoBlueLeft extends LinearOpMode {
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
         //CollectionDrive.setDirection(DcMotor.Direction.FORWARD);
         ArmDrive.setDirection(DcMotor.Direction.FORWARD);
-        claw.setPosition(0.5);
+        ratchetServo.setPosition(0);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -234,153 +236,56 @@ public class AutoBlueLeft extends LinearOpMode {
             // e.g.
             if(tagOfInterest.id == 1) // Left
             {
-                // Drive up to the highest pole
-                claw.setPosition(0);
+                // Drive up
                 allAtOnce(-1);
-                sleep(930);
+                sleep(500);
                 allAtOnce(0);
 
-                // Turn a bit
+                // Turn left
                 sleep(500);
                 leftFrontDrive.setPower(-1);
                 leftBackDrive.setPower(-1);
                 rightFrontDrive.setPower(1);
                 rightBackDrive.setPower(1);
-                sleep(60);
-                allAtOnce(0);
-
-                // Push the arm up to the pole
-                ArmDrive.setPower(-1);
-                sleep(4000);
-                ArmDrive.setPower(0);
-
-                // Open up and drop the cone then close
-                claw.setPosition(0.5);
-                sleep(50);
-                claw.setPosition(0);
-
-                // Turn back around and drive
-                sleep(500);
-                leftFrontDrive.setPower(1);
-                leftBackDrive.setPower(1);
-                rightFrontDrive.setPower(-1);
-                rightBackDrive.setPower(-1);
-                sleep(100);
-                allAtOnce(0);
-
-                allAtOnce(1);
                 sleep(400);
                 allAtOnce(0);
 
-                // Turn into the correct square (left)
-                sleep(500);
-                leftFrontDrive.setPower(1);
-                leftBackDrive.setPower(1);
-                rightFrontDrive.setPower(-1);
-                rightBackDrive.setPower(-1);
-                sleep(600);
-                allAtOnce(0);
-
                 // Now drive into it
-                allAtOnce(1);
+                sleep(500);
+                allAtOnce(-1);
                 sleep(400);
                 allAtOnce(0);
 
             }
             else if(tagOfInterest.id == 2) // Middle
             {
-                // Drive up to the highest pole
-                claw.setPosition(0);
+                // Drive up
                 allAtOnce(-1);
-                sleep(930);
-                allAtOnce(0);
-
-                // Turn a bit
-                sleep(500);
-                leftFrontDrive.setPower(-1);
-                leftBackDrive.setPower(-1);
-                rightFrontDrive.setPower(1);
-                rightBackDrive.setPower(1);
-                sleep(60);
-                allAtOnce(0);
-
-                // Push the arm up to the pole
-                ArmDrive.setPower(-1);
-                sleep(4000);
-                ArmDrive.setPower(0);
-
-                // Open up and drop the cone then close
-                claw.setPosition(0.5);
-                sleep(50);
-                claw.setPosition(0);
-
-                // Turn back around and drive to the middle
-                sleep(500);
-                leftFrontDrive.setPower(1);
-                leftBackDrive.setPower(1);
-                rightFrontDrive.setPower(-1);
-                rightBackDrive.setPower(-1);
-                sleep(100);
-                allAtOnce(0);
-
-                allAtOnce(1);
                 sleep(500);
                 allAtOnce(0);
-
             }
             else if(tagOfInterest.id == 3) // Right
             {
-                // Drive up to the highest pole
-                claw.setPosition(0);
+                // Drive up
                 allAtOnce(-1);
-                sleep(930);
-                allAtOnce(0);
-
-                // Turn a bit
                 sleep(500);
-                leftFrontDrive.setPower(-1);
-                leftBackDrive.setPower(-1);
-                rightFrontDrive.setPower(1);
-                rightBackDrive.setPower(1);
-                sleep(60);
                 allAtOnce(0);
 
-                // Push the arm up to the pole
-                ArmDrive.setPower(-1);
-                sleep(4000);
-                ArmDrive.setPower(0);
-
-                // Open up and drop the cone then close
-                claw.setPosition(0.5);
-                sleep(50);
-                claw.setPosition(0);
-
-                // Turn back around and drive
+                // Turn right
                 sleep(500);
                 leftFrontDrive.setPower(1);
                 leftBackDrive.setPower(1);
                 rightFrontDrive.setPower(-1);
                 rightBackDrive.setPower(-1);
-                sleep(100);
+                sleep(400);
                 allAtOnce(0);
 
+                // Now drive into it
+                sleep(500);
                 allAtOnce(1);
                 sleep(400);
                 allAtOnce(0);
 
-                // Turn into the correct square (right)
-                sleep(500);
-                leftFrontDrive.setPower(-1);
-                leftBackDrive.setPower(-1);
-                rightFrontDrive.setPower(1);
-                rightBackDrive.setPower(1);
-                sleep(600);
-                allAtOnce(0);
-
-                // Now drive into it
-                allAtOnce(-1);
-                sleep(400);
-                allAtOnce(0);
             }
         }
 

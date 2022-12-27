@@ -190,6 +190,7 @@ public class Drivetrain extends LinearOpMode {
                 ratchetMotor.setPower(1);
             } else {
                 ratchetMotor.setPower(0);
+
             }
 
             // Claw control
